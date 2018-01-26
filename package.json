@@ -1,0 +1,19 @@
+{
+  "name": "bootstrap4workflow",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivanevacic/Bootstrap4Workflow.git"
+  },
+  "author": "Ivan Evačić",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ivanevacic/Bootstrap4Workflow/issues"
+  },
+  "homepage": "https://github.com/ivanevacic/Bootstrap4Workflow#readme"
+}
