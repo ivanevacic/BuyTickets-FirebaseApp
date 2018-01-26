@@ -32,7 +32,7 @@ gulp.task('serve', ['sass'], () => {
 	gulp.watch('src/*.html').on('change', browserSync.reload);
 });
 
-//Move Fonst folder to src
+//Move Fonts folder to src
 gulp.task('fonts', () => {
 	return gulp.src('node_modules/fonts-awesome/fonts/*')
 		pipe(gulp.dest('src/fonts'));
