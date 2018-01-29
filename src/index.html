@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Buy tickets!</title>
+  <title>BuyTrainTicket</title>
   <!-- Stylesheets -->
   <link rel="stylesheet" href="css/font-awesome.min.css">
   <link rel="stylesheet" href="css/bootstrap.css">
@@ -12,42 +12,82 @@
 </head>
 <body>
   <!--  Navbar  -->
-  <nav class="navbar navbar-expand-sm navbar-dark bg-dark p-0">
-    <div class="container">
-      <a href="/" class="navbar-brand">Trainstation</a>
-      <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <!--Navbar links-->
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item px-2">
-            <a href="dashboard.html" class="nav-link">Dashboard</a>
-          </li>
-          <li class="nav-item px-2">
-            <a href="search_tickets.html" class="nav-link">Search tickets</a>
-          </li>
-        </ul>
-        <!--  Navbar-right-dropdown-menu  -->
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item dropdown mr-3">
-            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-user"></i> Welcome!
-            </a>
-            <div class="dropdown-menu">
-              <a href="www.google.com" class="dropdown-item">
-                <i class="fa fa-user-circle"></i> Get me out of here!
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark p-0">
+      <div class="container">
+        <a href="index.html" class="navbar-brand">BuyTrainTicket</a>
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <!--Navbar links-->
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item px-2">
+              <a href="dashboard.html" class="nav-link">Dashboard</a>
+            </li>
+            <li class="nav-item px-2">
+              <a href="search_tickets.html" class="nav-link">Search tickets</a>
+            </li>
+          </ul>
+          <!--  Navbar-right-dropdown-menu  -->
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown mr-3">
+              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-user"></i> Welcome!
               </a>
+              <div class="dropdown-menu">
+                <a href="www.google.com" class="dropdown-item">
+                  <i class="fa fa-user-circle"></i> Get me out of here!
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  <!--  Create ticket  -->
+  <div class="container">
+      <div class="jumbotron">         
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label for="input_Starting_Point">From</label>
+              <input type="text" class="form-control" id="input_Starting_Point">
             </div>
-          </li>
-        </ul>
+            <div class="form-group">
+              <label for="input_Destination_Point">To</label>
+              <input type="text" class="form-control" id="input_Destination_Point">
+            </div> 
+            <div class="form-group">
+              <label for="date">Date</label>
+              <input type="text" class="form-control" id="date">
+            </div>
+            </form>   
+          <div class="container">
+          <!-- Google Map -->
+            <div id="googleMap"></div>
+            <!-- Ticket details -->
+            <div id="output"></div>
+        </div>
+        <div class="container">
+          <button class="btn btn-primary" onclick="createTicket();">Save</button>
+        </div>
       </div>
     </div>
-  </nav>
+    
 
-  <!-- Scripts -->
+  <!-- Default Scripts -->
   <script src="js/jquery.min.js"></script>
   <script src="js/popper.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
+  <!--  Firebase script -->
+  <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+  <!-- Firebase Realtime Database script -->
+  <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase-database.js"></script>
+  <!--  Firebase configuration script -->
+  <script src="assets/js/FirebaseConfig.js"></script>
+  <!-- Google Maps  -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwJ
+  2Vepe9L2Miuh7QH87SR_RItIXHlX6Q&libraries=places"></script>
+  <!-- Index script  -->
+  <script src="js/index.js"></script>
 </body>
 </html>

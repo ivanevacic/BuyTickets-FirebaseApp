@@ -1,0 +1,18 @@
+{
+  "Tickets": [
+    {
+      "starting_point": "Split, Croatia",
+      "destionation_point": "Koprivnica, Croatia",
+      "date_created": "05/17/2017",
+      "ticket_type": "One way",
+      "price": 43
+    },
+    {
+      "starting_point": "London, United Kingdom",
+      "destionation_point": "Oxford, United Kingdom",
+      "date_created": "05/17/2017",
+      "ticket_type": "One way",
+      "price": 43
+    }
+  ]
+}
