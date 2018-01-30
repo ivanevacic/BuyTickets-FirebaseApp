@@ -29,7 +29,7 @@ function calculateRoute(){
   directionsService.route(request, function(result, status){
     if(status == google.maps.DirectionsStatus.OK) {
       //Get distance in km and time needed to travel via Transit
-      $('#output').html("<div class='alert-info'>From:)" + document.getElementById("input_Starting_Point").value +".<br />To:" + document.getElementById("input_Destination_Point").value +".<br />Distance: "+result.routes[0].legs[0].distance.text+".<br />Duration:"+result.routes[0].legs[0].duration.text+".</div>");
+      $('#output').html("<div class='alert-info'>From: " + document.getElementById("input_Starting_Point").value +".<br />To: " + document.getElementById("input_Destination_Point").value +".<br />Distance: "+result.routes[0].legs[0].distance.text+".<br />Duration: "+result.routes[0].legs[0].duration.text+".</div>");
 
       //Display route
       directionsDisplay.setDirections(result);
