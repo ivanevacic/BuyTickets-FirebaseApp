@@ -3,7 +3,8 @@
   height: 300px; }
 
 #output {
-  margin-top: 30px; }
+  margin-top: 30px;
+  margin-bottom: 30px; }
 
-#test {
+#ticketJumbotron {
   margin-top: 30px; }
