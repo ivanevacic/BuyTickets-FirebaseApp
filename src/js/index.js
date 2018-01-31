@@ -1,3 +1,5 @@
+
+
 //--  Create Google Maps map  --//
   //  Map options
   var myLatLng = {
@@ -24,10 +26,13 @@ var input2 = document.getElementById('input_Destination_Point');
 var autocomplete2 = new google.maps.places.Autocomplete(input2, options);
 //------------------------//
 
+
+//--Set DirectionsService --//
 var directionsService = new google.maps.DirectionsService();
 var directionsDisplay = new google.maps.DirectionsRenderer();
 directionsDisplay.setMap(map);
 
+//--------------------------//
 function calculateRoute(){
   //  Create request
   var request = {
@@ -98,7 +103,7 @@ function createTicket() {
         console.log('updated');
      }
      else {
-       alert('not working');
+       alert('Unable to save ticket.Check your input!');
        return;
      }
   });  

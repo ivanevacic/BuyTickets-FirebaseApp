@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="css/font-awesome.min.css">
   <link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/style.css">
+  <!--  Datepicker stylesheets  -->
+  <link rel="stylesheet" href="js/Datepicker/css/bootstrap-datepicker.css">
 </head>
 <body>
   <!--  Navbar  -->
@@ -60,6 +62,10 @@
               <label for="date">Date</label>
               <input type="text" class="form-control" id="date">
             </div>
+            <!-- datepicker test -->
+            <div class="container">
+              Date of birth : <input class="datepicker" type="text" name ="date">
+            </div>
             </form>   
           <div class="container">
           <!-- Google Map -->
@@ -73,6 +79,7 @@
         </div>
       </div>
     </div>
+    
     
   <!-- Default Scripts -->
   <script src="js/jquery.min.js"></script>
@@ -89,5 +96,13 @@
   2Vepe9L2Miuh7QH87SR_RItIXHlX6Q&libraries=places"></script>
   <!-- Index script  -->
   <script src="js/index.js"></script>
+  <script src="js/Datepicker/js/bootstrap-datepicker.js"></script>
+
+  <!-- Bootstrap Datepicker init script -->
+  <script>
+    $(function(){
+      $('.datepicker').datepicker();
+    });
+  </script>
 </body>
 </html>
