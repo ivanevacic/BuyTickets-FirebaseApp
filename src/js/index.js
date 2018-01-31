@@ -13,9 +13,20 @@
   var map = new google.maps.Map(document.getElementById('googleMap'),mapOptions);
 //----------------------------//
 
+//--  Input autocomplete --//
+var options = {
+  types: ['(cities)'] //  Limit autocomplete only to cities
+}
+var input1 = document.getElementById('input_Starting_Point');
+var autocomplete1 = new google.maps.places.Autocomplete(input1, options);
+
+var input2 = document.getElementById('input_Destination_Point');
+var autocomplete2 = new google.maps.places.Autocomplete(input2, options);
+//------------------------//
+
 var directionsService = new google.maps.DirectionsService();
 var directionsDisplay = new google.maps.DirectionsRenderer();
-  directionsDisplay.setMap(map);
+directionsDisplay.setMap(map);
 
 function calculateRoute(){
   //  Create request
@@ -45,40 +56,51 @@ function calculateRoute(){
   });
 }
 
-//--  Input autocomplete --//
-var options = {
-  types: ['(cities)'] //  Limit autocomplete only to cities
-}
-var input1 = document.getElementById('input_Starting_Point');
-var autocomplete1 = new google.maps.places.Autocomplete(input1, options);
-
-var input2 = document.getElementById('input_Destination_Point');
-var autocomplete2 = new google.maps.places.Autocomplete(input2, options);
-//------------------------//
 
 function createTicket() {
   var startingPoint = document.getElementById('input_Starting_Point').value;
   var destinationPoint = document.getElementById('input_Destination_Point').value;
-  var dateInput = document.getElementById('date').value;
-  //  Create new key in Firebase
-  var tKey = firebase.database().ref().child('Tickets').push().key;
-  //  Object with input values;
-  var Ticket = {
-    date_created: dateInput,
-    destination_point: destinationPoint,
-    price: 50,
-    starting_point: startingPoint,
-    ticket_type: "One way"
+  var dateInput = document.getElementById('date').value; 
+  //  Create request
+  var request = {
+    origin: startingPoint,
+    destination: destinationPoint,
+    travelMode: google.maps.TravelMode.TRANSIT,
+    unitSystem: google.maps.UnitSystem.METRIC
   }
-  //  Save object to Firebase
-  var oTicket = {};
-  oTicket[tKey] = Ticket;
-  Tickets.update(oTicket);
-  //Test
-  console.log(Ticket);
-  console.log('updated');
+  //  Pass request to route method
+  directionsService.route(request, function(result, status){
+    if(status == google.maps.DirectionsStatus.OK) {
+      //Get distance in float format
+      var distance = parseFloat(result.routes[0].legs[0].distance.text.replace(",","."));
+      //Calculate price(fixed 0.2 euros/km)
+      var price = distance * 0.2;
+      //Duration in format '2h 22m'
+      var duration = result.routes[0].legs[0].duration.text;
+      //  Create new key in Firebase
+      var tKey = firebase.database().ref().child('Tickets').push().key;
+      //  Object with input values;
+      var Ticket = {
+        date_created: dateInput,
+        destination_point: destinationPoint,
+        price: price,
+        distance: distance,
+        duration: duration,
+        starting_point: startingPoint,
+        ticket_type: "One way"
+        }
+        //  Save object to Firebase
+        var oTicket = {};
+        oTicket[tKey] = Ticket;
+        Tickets.update(oTicket);
+        //Test
+        console.log(Ticket);
+        console.log('updated');
+     }
+     else {
+       alert('not working');
+       return;
+     }
+  });  
 }
 
-//-- Datepicker --//
-
-//---------------//
