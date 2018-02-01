@@ -78,8 +78,9 @@ function createTicket() {
       var distance = parseFloat(result.routes[0].legs[0].distance.text.replace(",","."));
       //  Duration in format '2h 22m'
       var duration = result.routes[0].legs[0].duration.text;
+      
       //  Get value of selected radio button(ticket type)
-      var types = document.getElementsByName('optradio');
+      var types = document.getElementsByName('optradio');     
       var ticketType;
       for(var i = 0; i < types.length; i++){
         if(types[i].checked){
@@ -87,12 +88,13 @@ function createTicket() {
         }
       }
       //  Calculate ticket price depending on selected radio button type
+      var price;
       if(ticketType == 'One way ticket'){
         //Fixed 0.2 euros/km
-        var price = distance * 0.2.toFixed(2);
+        price = parseFloat((distance * 0.2).toFixed(2));
       }
       if(ticketType == '2-part return ticket'){
-        var price = (distance * 0.2) * 2;
+        price = parseFloat(((distance * 0.2) * 2).toFixed(2));
       }
       //  Create new key in Firebase
       var tKey = firebase.database().ref().child('Tickets').push().key;
