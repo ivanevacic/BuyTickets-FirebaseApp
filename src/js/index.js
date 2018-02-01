@@ -1,5 +1,3 @@
-
-
 //--  Create Google Maps map  --//
   //  Map options
   var myLatLng = {
@@ -65,7 +63,7 @@ function calculateRoute(){
 function createTicket() {
   var startingPoint = document.getElementById('input_Starting_Point').value;
   var destinationPoint = document.getElementById('input_Destination_Point').value;
-  var dateInput = document.getElementById('date').value; 
+  var date = document.getElementById('datePicker_date').value; 
   //  Create request
   var request = {
     origin: startingPoint,
@@ -86,7 +84,7 @@ function createTicket() {
       var tKey = firebase.database().ref().child('Tickets').push().key;
       //  Object with input values;
       var Ticket = {
-        date_created: dateInput,
+        date_created: date,
         destination_point: destinationPoint,
         price: price,
         distance: distance,
