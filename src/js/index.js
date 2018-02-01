@@ -25,7 +25,7 @@ var autocomplete2 = new google.maps.places.Autocomplete(input2, options);
 //------------------------//
 
 
-//--Set DirectionsService --//
+//--  Set DirectionsService --//
 var directionsService = new google.maps.DirectionsService();
 var directionsDisplay = new google.maps.DirectionsRenderer();
 directionsDisplay.setMap(map);
@@ -42,18 +42,18 @@ function calculateRoute(){
   //  Pass request to route method
   directionsService.route(request, function(result, status){
     if(status == google.maps.DirectionsStatus.OK) {
-      //Get distance in km and time needed to travel via Transit
+      //  Get distance in km and time needed to travel via Transit
       $('#output').html("<div class='alert-info'>From: " + document.getElementById("input_Starting_Point").value +".<br />To: " + document.getElementById("input_Destination_Point").value +".<br />Distance: "+result.routes[0].legs[0].distance.text+".<br />Duration: "+result.routes[0].legs[0].duration.text+".</div>");
 
       //Display route
       directionsDisplay.setDirections(result);
     }
     else {
-      //Delete route from map
+      //  Delete route from map
       directionsDisplay.setDirections({routes: []});
       //Center map in London
       map.setCenter(myLatLng);
-      //Show error message
+      //  Show error message
       $('#output').html("<div class='alert-danger'>Could not calculate route.</div>");
     }
   });
@@ -74,12 +74,26 @@ function createTicket() {
   //  Pass request to route method
   directionsService.route(request, function(result, status){
     if(status == google.maps.DirectionsStatus.OK) {
-      //Get distance in float format
+      //  Get distance in float format
       var distance = parseFloat(result.routes[0].legs[0].distance.text.replace(",","."));
-      //Calculate price(fixed 0.2 euros/km)
-      var price = distance * 0.2;
-      //Duration in format '2h 22m'
+      //  Duration in format '2h 22m'
       var duration = result.routes[0].legs[0].duration.text;
+      //  Get value of selected radio button(ticket type)
+      var types = document.getElementsByName('optradio');
+      var ticketType;
+      for(var i = 0; i < types.length; i++){
+        if(types[i].checked){
+          ticketType = types[i].value;
+        }
+      }
+      //  Calculate ticket price depending on selected radio button type
+      if(ticketType == 'One way ticket'){
+        //Fixed 0.2 euros/km
+        var price = distance * 0.2.toFixed(2);
+      }
+      if(ticketType == '2-part return ticket'){
+        var price = (distance * 0.2) * 2;
+      }
       //  Create new key in Firebase
       var tKey = firebase.database().ref().child('Tickets').push().key;
       //  Object with input values;
@@ -90,13 +104,13 @@ function createTicket() {
         distance: distance,
         duration: duration,
         starting_point: startingPoint,
-        ticket_type: "One way"
+        ticket_type: ticketType
         }
         //  Save object to Firebase
         var oTicket = {};
         oTicket[tKey] = Ticket;
         Tickets.update(oTicket);
-        //Test
+        //  Test
         console.log(Ticket);
         console.log('updated');
      }
