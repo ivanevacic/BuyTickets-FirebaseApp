@@ -65,8 +65,8 @@
       </table>
     </div>
     <!--  ViewDetailsModal  -->
-    <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
+    <div class="modal fade view-modal-modal-lg" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Ticket</h5>
@@ -74,9 +74,10 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="card">
-            <div class="card-body">
-              This is some text within a card body.
+          <div class="container">
+            <!-- Google map with markers on starting point and destination  -->
+            <div id="viewMap">
+              
             </div>
           </div>
           <div class="modal-footer">
@@ -85,6 +86,50 @@
         </div>
       </div>
     </div>
+    <!-- EditTicketModal  -->
+    <div class="modal fade bd-example-modal-lg" id="editTicketModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <!--  test -->
+            <div class="container" id="ticketJumbotron">       
+                    <form class="form-horizontal">
+                      <div class="form-group">
+                        <label for="input_Starting_Point">From</label>
+                        <input type="text" class="form-control" id="input_Starting_Point">
+                      </div>
+                      <div class="form-group">
+                        <label for="input_Destination_Point">To</label>
+                        <input type="text" class="form-control" id="input_Destination_Point">
+                      </div> 
+                      <!--  Ticket type radio buttons  -->
+                      <div class="radio">
+                        <label><input type="radio" name="optradio" checked="checked" value="One way ticket"> One way ticket</label>
+                      </div>
+                      <div class="radio">
+                        <label><input type="radio" name="optradio" value="2-part return ticket"> 2-part return ticket</label>
+                      </div>
+                      <!-- Datepicker input -->
+                      <div class="form-group">
+                        <label for="datepicker">Date</label>
+                        <input type="text"  class="datepicker"  name ="date" id="datePicker_date">
+                      </div>
+                      </form>   
+                    <div class="container">
+                    <!-- Google Map -->
+                      <div id="googleMap"></div>
+                      <!-- Ticket details -->
+                      <div id="output"></div>
+                  </div>
+                  <div class="container">         
+                    <button class="btn btn-primary" onclick="calculateRoute();" id="calculateRouteButton">Calculate route</button>
+                    <button class="btn btn-primary pull-right" onclick="" id="saveChangesButton">Save changes</button>
+                    <button class="btn btn-primary pull-right" id="closeButton">Close</button>
+                    
+                  </div>
+                </div>
+              </div>
+          </div>
+      </div>
  
   <!-- Default Scripts -->
   <script src="js/jquery.min.js"></script>
@@ -104,6 +149,6 @@
   <!-- Bootstrap Datepicker script -->
   <script src="js/Datepicker/js/bootstrap-datepicker.js"></script>
   <script src="js/Datepicker/js/datePicker.js"></script>
-
+    
 </body>
 </html>

@@ -75,7 +75,7 @@ function createTicket() {
       //  Get distance in float format
       var distanceGMmaps = parseFloat(result.routes[0].legs[0].distance.text.replace(",","."));    
       //  Duration in format '2h 22m'
-      var duration = result.routes[0].legs[0].duration.text;
+      var duration = result.routes[0].legs[0].duration.text;  //time
       
       //  Get value of selected radio button(ticket type)
       var types = document.getElementsByName('optradio');     
