@@ -41,11 +41,9 @@ function calculateRoute(){
   }
   //  Pass request to route method
   directionsService.route(request, function(result, status){
-    if(status == google.maps.DirectionsStatus.OK) {
+    if(status == google.maps.DirectionsStatus.OK) {     
       //  Get distance in km and time needed to travel via Transit
-      $('#output').html("<div class='alert-info'>From: " + document.getElementById("input_Starting_Point").value +".<br />To: " + document.getElementById("input_Destination_Point").value +".<br />Distance: "+result.routes[0].legs[0].distance.text+".<br />Duration: "+result.routes[0].legs[0].duration.text+".</div>");
-
-      //Display route
+      $('#output').html("<div class='alert-info'>From: " + document.getElementById("input_Starting_Point").value +".<br />To: " + document.getElementById("input_Destination_Point").value +".<br />Distance: "+result.routes[0].legs[0].distance.text+".<br />Duration: "+result.routes[0].legs[0].duration.text+".</div>");      //Display route
       directionsDisplay.setDirections(result);
     }
     else {
@@ -75,7 +73,7 @@ function createTicket() {
   directionsService.route(request, function(result, status){
     if(status == google.maps.DirectionsStatus.OK) {
       //  Get distance in float format
-      var distance = parseFloat(result.routes[0].legs[0].distance.text.replace(",","."));
+      var distanceGMmaps = parseFloat(result.routes[0].legs[0].distance.text.replace(",","."));    
       //  Duration in format '2h 22m'
       var duration = result.routes[0].legs[0].duration.text;
       
@@ -87,16 +85,22 @@ function createTicket() {
           ticketType = types[i].value;
         }
       }
-      //  Calculate ticket price depending on selected radio button type
+      var distance;
       var price;
       if(ticketType == 'One way ticket'){
         //Fixed 0.2 euros/km
+        distance = distanceGMmaps;
         price = parseFloat((distance * 0.2).toFixed(2));
       }
       if(ticketType == '2-part return ticket'){
-        price = parseFloat(((distance * 0.2) * 2).toFixed(2));
+        distance = distanceGMmaps * 2;
+        price = parseFloat(((distance * 0.2).toFixed(2)));
       }
-      //  Create new key in Firebase
+      //  Calculate ticket price depending on selected radio button type     
+      //  Create new key in Firebase          
+      // Calculate distance based on ticket type
+      console.log(distance);     
+      // Firebase reference
       var tKey = firebase.database().ref().child('Tickets').push().key;
       //  Object with input values;
       var Ticket = {
