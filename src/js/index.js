@@ -66,16 +66,11 @@ function calculateRoute(){
         }
       }
       //  Get distance in km and time needed to travel via Transit
-      $('#output').html("<div class='alert-info'>From: " + document.getElementById("input_Starting_Point").value +".<br />To: " + document.getElementById("input_Destination_Point").value +".<br />Distance: "+distance+".<br />Duration: "+result.routes[0].legs[0].duration.text+".</div>");      //Display route
+      $('#output').html("<div class='alert-info'>From: " + document.getElementById("input_Starting_Point").value +".<br />To: " + document.getElementById("input_Destination_Point").value +".<br />Distance: "+distance+ "km" + ".<br />Duration: "+result.routes[0].legs[0].duration.text+".</div>");      //Display route
       directionsDisplay.setDirections(result);
     }
-    else {
-      //  Delete route from map
-      directionsDisplay.setDirections({routes: []});
-      //Center map in London
-      map.setCenter(myLatLng);
-      //  Show error message
-      $('#output').html("<div class='alert-danger'>Could not calculate route.</div>");
+    else {     
+      alert("Can't calculate route.Try another city!");
     }
   });
 }
@@ -107,6 +102,10 @@ function createTicket() {
         if(types[i].checked){
           ticketType = types[i].value;
         }
+      }
+      if(document.getElementById('datePicker_date').value  == '' ) {
+        alert('Enter input date');
+        return;
       }
       var distance;
       var price;
