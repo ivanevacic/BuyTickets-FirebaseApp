@@ -46,6 +46,24 @@ Tickets.on('value', function(firebaseResponse){
 
 //Views ticket route in google maps
 function ViewTicketDetails(ticketKey){
+
+  var myLatLng = {
+        lat: 51.5,
+      lng: -0.1
+      };
+      var mapOptions = {
+        center:myLatLng,
+        zoom:5,
+        MapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      
+      // Create map with defined options
+     var map = new google.maps.Map(document.getElementById('viewMap'),mapOptions);
+      
+      var directionsService = new google.maps.DirectionsService();
+      var directionsDisplay = new google.maps.DirectionsRenderer();
+    - directionsDisplay.setMap(map);
+
   var starting_point;
   var destination_point;
   var ticketRef = firebaseBuyTickets.ref('Tickets/' + ticketKey );
@@ -68,13 +86,13 @@ function ViewTicketDetails(ticketKey){
   //  Pass request to route method
   directionsService.route(request, function(result, status){
     if(status == google.maps.DirectionsStatus.OK) {   
-      //If route is valid,show path in google maps           
-      directionsDisplay.setDirections(result);
-      console.log(result);
+      //If route is valid,show path in google maps    
+      console.log(result);       
+      directionsDisplay.setDirections(result);     
       $('#viewModal').on('shown.bs.modal', function(){
         google.maps.event.trigger(mapView, 'resize');
       });    
-    }
+    }   
     else {
       //  Delete route from map
       directionsDisplay.setDirections({routes: []});
@@ -83,6 +101,7 @@ function ViewTicketDetails(ticketKey){
       //  Show error message
       alert('error');
     }
+    
   });
 }
 
@@ -183,9 +202,10 @@ function EditTicket(ticketKey){
   }
   //  Pass request to route method
   directionsService.route(request, function(result, status){
-    if(status == google.maps.DirectionsStatus.OK) {                   
+    if(status == google.maps.DirectionsStatus.OK) { 
+      directionsDisplay.setDirections(result);       
       console.log(result);
-      $('#viewModal').on('shown.bs.modal', function(){
+      $('#editTicketModal').on('shown.bs.modal', function(){
         google.maps.event.trigger(mapEdit, 'resize');
       });    
     }

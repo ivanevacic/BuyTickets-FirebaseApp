@@ -118,9 +118,6 @@ function createTicket() {
         distance = distanceGMmaps * 2;
         price = parseFloat(((distance * 0.2).toFixed(2)));
       }
-      //  Calculate ticket price depending on selected radio button type     
-      //  Create new key in Firebase          
-      // Calculate distance based on ticket type
       console.log(distance);     
       // Firebase reference
       var tKey = firebase.database().ref().child('Tickets').push().key;
