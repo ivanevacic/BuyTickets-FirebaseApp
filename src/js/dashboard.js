@@ -11,25 +11,22 @@
     MapTypeId: google.maps.MapTypeId.ROADMAP
   }; 
    //All maps
-var mapView = new google.maps.Map(document.getElementById('viewMap'),mapOptions);
+///var mapView = new google.maps.Map(document.getElementById('viewMap'),mapOptions);
 var mapEdit = new google.maps.Map(document.getElementById('editGoogleMap'),mapOptions);
 //Direction services
 var directionsService = new google.maps.DirectionsService();
 var directionsDisplay = new google.maps.DirectionsRenderer();
-directionsDisplay.setMap(mapView);
+//directionsDisplay.setMap(mapView);
 directionsDisplay.setMap(mapEdit); 
-  //--  Input autocomplete --//
-  var options = {
-    types: ['(cities)'] //  Limit autocomplete only to cities
-  }
-  var input1 = document.getElementById('inputEdit_Starting_Point');
-  var autocomplete1 = new google.maps.places.Autocomplete(input1, options);
+//--  Input autocomplete --//
+var options = {
+  types: ['(cities)'] //  Limit autocomplete only to cities
+}
+var input1 = document.getElementById('inputEdit_Starting_Point');
+var autocomplete1 = new google.maps.places.Autocomplete(input1, options);
   
-  var input2 = document.getElementById('inputEdit_Destination_Point');
-  var autocomplete2 = new google.maps.places.Autocomplete(input2, options);
-  
-  
- 
+var input2 = document.getElementById('inputEdit_Destination_Point');
+var autocomplete2 = new google.maps.places.Autocomplete(input2, options); 
 //Populates table with ticket on each refresh
 Tickets.on('value', function(firebaseResponse){
   var ticket_table = $('#ticket_table');
@@ -42,10 +39,9 @@ Tickets.on('value', function(firebaseResponse){
   });
 });
 
-
-
 //Views ticket route in google maps
 function ViewTicketDetails(ticketKey){
+  
   var myLatLng = {
         lat: 51.5,
       lng: -0.1
@@ -55,11 +51,11 @@ function ViewTicketDetails(ticketKey){
         zoom:6,
         MapTypeId: google.maps.MapTypeId.ROADMAP
       };     
-      // Create map with defined options
-    var map = new google.maps.Map(document.getElementById('viewMap'),mapOptions);     
-    var directionsService = new google.maps.DirectionsService();
-    var directionsDisplay = new google.maps.DirectionsRenderer();
-    directionsDisplay.setMap(map);
+  // Create map with defined options
+  var map = new google.maps.Map(document.getElementById('viewMap'),mapOptions);     
+  var directionsService = new google.maps.DirectionsService();
+  var directionsDisplay = new google.maps.DirectionsRenderer();
+  directionsDisplay.setMap(map);
 
   var starting_point;
   var destination_point;
@@ -90,17 +86,11 @@ function ViewTicketDetails(ticketKey){
       });       
     }   
     else {
-      //  Delete route from map
-      directionsDisplay.setDirections({routes: []});
-      //Center map in London
-      map.setCenter(myLatLng);
-      //  Show error message
       alert('error');
-    }   
+    } 
   });
 }
 
-//Populates edit modal with values from firebase for clicked ticket
 //Populates edit modal with values from firebase for clicked ticket
 function EditTicket(ticketKey){
   var ticketRef = firebaseBuyTickets.ref('Tickets/' + ticketKey );
