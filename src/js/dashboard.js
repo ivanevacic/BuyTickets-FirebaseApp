@@ -157,7 +157,7 @@ var mapOptions = {
         starting_point: startingPoint,
         ticket_type: ticketType
         }
-        //  Save object to Firebase
+        
         
         ticketRef.update(Ticket);
         //  Test
@@ -220,11 +220,6 @@ function EditTicket(ticketKey){
       });    
     }
     else {
-      //  Delete route from map
-      directionsDisplay.setDirections({routes: []});
-      //Center map in London
-      map.setCenter(myLatLng);
-      //  Show error message
       alert('error');
     }
   });
