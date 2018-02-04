@@ -1,5 +1,6 @@
   //------------------------//
   //Create google maps
+  
   var myLatLng = {
     lat: 51.5,
     lng: -0.1
@@ -9,16 +10,14 @@
     zoom:5,
     MapTypeId: google.maps.MapTypeId.ROADMAP
   }; 
-  
-  //All maps
+   //All maps
 var mapView = new google.maps.Map(document.getElementById('viewMap'),mapOptions);
 var mapEdit = new google.maps.Map(document.getElementById('editGoogleMap'),mapOptions);
 //Direction services
 var directionsService = new google.maps.DirectionsService();
 var directionsDisplay = new google.maps.DirectionsRenderer();
 directionsDisplay.setMap(mapView);
-directionsDisplay.setMap(mapEdit);
-  
+directionsDisplay.setMap(mapEdit); 
   //--  Input autocomplete --//
   var options = {
     types: ['(cities)'] //  Limit autocomplete only to cities
@@ -44,6 +43,7 @@ Tickets.on('value', function(firebaseResponse){
 });
 
 
+
 //Views ticket route in google maps
 function ViewTicketDetails(ticketKey){
 
@@ -62,7 +62,7 @@ function ViewTicketDetails(ticketKey){
       
       var directionsService = new google.maps.DirectionsService();
       var directionsDisplay = new google.maps.DirectionsRenderer();
-    - directionsDisplay.setMap(map);
+     directionsDisplay.setMap(map);
 
   var starting_point;
   var destination_point;
@@ -100,11 +100,11 @@ function ViewTicketDetails(ticketKey){
       map.setCenter(myLatLng);
       //  Show error message
       alert('error');
-    }
-    
+    }   
   });
 }
 
+//Populates edit modal with values from firebase for clicked ticket
 //Populates edit modal with values from firebase for clicked ticket
 function EditTicket(ticketKey){
   var ticketRef = firebaseBuyTickets.ref('Tickets/' + ticketKey );
@@ -143,7 +143,6 @@ function EditTicket(ticketKey){
     }
   });
 }
-
 
 //Save changes on ticket(if we have any)
 function saveChanges(ticketKey) {
