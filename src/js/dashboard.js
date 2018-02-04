@@ -46,23 +46,20 @@ Tickets.on('value', function(firebaseResponse){
 
 //Views ticket route in google maps
 function ViewTicketDetails(ticketKey){
-
   var myLatLng = {
         lat: 51.5,
       lng: -0.1
       };
       var mapOptions = {
         center:myLatLng,
-        zoom:5,
+        zoom:6,
         MapTypeId: google.maps.MapTypeId.ROADMAP
-      };
-      
+      };     
       // Create map with defined options
-     var map = new google.maps.Map(document.getElementById('viewMap'),mapOptions);
-      
-      var directionsService = new google.maps.DirectionsService();
-      var directionsDisplay = new google.maps.DirectionsRenderer();
-     directionsDisplay.setMap(map);
+    var map = new google.maps.Map(document.getElementById('viewMap'),mapOptions);     
+    var directionsService = new google.maps.DirectionsService();
+    var directionsDisplay = new google.maps.DirectionsRenderer();
+    directionsDisplay.setMap(map);
 
   var starting_point;
   var destination_point;
@@ -74,8 +71,7 @@ function ViewTicketDetails(ticketKey){
       //test
       console.log('from : ' + starting_point);
       console.log('to : ' + destination_point);          
-  });
-  
+  });  
   //  Create google maps request   
   var request = {
     origin: starting_point,
@@ -90,8 +86,8 @@ function ViewTicketDetails(ticketKey){
       console.log(result);       
       directionsDisplay.setDirections(result);     
       $('#viewModal').on('shown.bs.modal', function(){
-        google.maps.event.trigger(mapView, 'resize');
-      });    
+        google.maps.event.trigger(map, 'resize');
+      });       
     }   
     else {
       //  Delete route from map
