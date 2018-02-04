@@ -113,7 +113,7 @@ function EditTicket(ticketKey){
       $('#inputEdit_Starting_Point').val(ticket.starting_point); 
       $('#inputEdit_Destination_Point').val(ticket.destination_point);  
       $('#editDatePicker_date').val(ticket.date_created);
-      $('#bsaveChangesButton').attr('onclick', 'saveChanges("' + ticketKey + '")');
+      $('#saveChangesButton').attr('onclick', 'saveChanges("' + ticketKey + '")');
       //Check ticket type based on firebase value
       if(ticket.ticket_type == 'One way ticket') {
         document.getElementById('one_way').checked = true;
