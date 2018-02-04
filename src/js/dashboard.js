@@ -105,6 +105,46 @@ function ViewTicketDetails(ticketKey){
   });
 }
 
+//Populates edit modal with values from firebase for clicked ticket
+function EditTicket(ticketKey){
+  var ticketRef = firebaseBuyTickets.ref('Tickets/' + ticketKey );
+  ticketRef.once('value', function(firebaseResponse){
+    var ticket = firebaseResponse.val();
+      $('#inputEdit_Starting_Point').val(ticket.starting_point); 
+      $('#inputEdit_Destination_Point').val(ticket.destination_point);  
+      $('#editDatePicker_date').val(ticket.date_created);
+      $('#bsaveChangesButton').attr('onclick', 'saveChanges("' + ticketKey + '")');
+      //Check ticket type based on firebase value
+      if(ticket.ticket_type == 'One way ticket') {
+        document.getElementById('one_way').checked = true;
+      }   
+      if(ticket.ticket_type == '2-part return ticket'){
+        document.getElementById('return').checked = true;
+      }   
+  });
+  //  Create request
+  var request = {
+    origin: $('#inputEdit_Starting_Point').val(),
+    destination: $('#inputEdit_Destination_Point').val(),
+    travelMode: google.maps.TravelMode.TRANSIT,
+    unitSystem: google.maps.UnitSystem.METRIC
+  }
+  //  Pass request to route method
+  directionsService.route(request, function(result, status){
+    if(status == google.maps.DirectionsStatus.OK) { 
+      directionsDisplay.setDirections(result);       
+      console.log(result);
+      $('#editTicketModal').on('shown.bs.modal', function(){
+        google.maps.event.trigger(mapEdit, 'resize');
+      });    
+    }
+    else {
+      alert('error');
+    }
+  });
+}
+
+
 //Save changes on ticket(if we have any)
 function saveChanges(ticketKey) {
   //Reference clicked ticket in table
@@ -176,44 +216,6 @@ function saveChanges(ticketKey) {
   });  
 }
 
-//Populates edit modal with values from firebase for clicked ticket
-function EditTicket(ticketKey){
-  var ticketRef = firebaseBuyTickets.ref('Tickets/' + ticketKey );
-  ticketRef.once('value', function(firebaseResponse){
-    var ticket = firebaseResponse.val();
-      $('#inputEdit_Starting_Point').val(ticket.starting_point); 
-      $('#inputEdit_Destination_Point').val(ticket.destination_point);  
-      $('#editDatePicker_date').val(ticket.date_created);
-      $('#bsaveChangesButton').attr('onclick', 'saveChanges("' + ticketKey + '")');
-      //Check ticket type based on firebase value
-      if(ticket.ticket_type == 'One way ticket') {
-        document.getElementById('one_way').checked = true;
-      }   
-      if(ticket.ticket_type == '2-part return ticket'){
-        document.getElementById('return').checked = true;
-      }   
-  });
-  //  Create request
-  var request = {
-    origin: $('#inputEdit_Starting_Point').val(),
-    destination: $('#inputEdit_Destination_Point').val(),
-    travelMode: google.maps.TravelMode.TRANSIT,
-    unitSystem: google.maps.UnitSystem.METRIC
-  }
-  //  Pass request to route method
-  directionsService.route(request, function(result, status){
-    if(status == google.maps.DirectionsStatus.OK) { 
-      directionsDisplay.setDirections(result);       
-      console.log(result);
-      $('#editTicketModal').on('shown.bs.modal', function(){
-        google.maps.event.trigger(mapEdit, 'resize');
-      });    
-    }
-    else {
-      alert('error');
-    }
-  });
-}
 
 //Calculate updated route in edit modal
 function calculateRoute(){
