@@ -138,6 +138,7 @@ function createTicket() {
         //  Test
         console.log(Ticket);
         console.log('updated');
+        window.location.href = 'http://localhost:3000/dashboard.html'
      }
      else {
        alert('Unable to save ticket.Check your input!');
