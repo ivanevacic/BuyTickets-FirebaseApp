@@ -41,9 +41,32 @@ function calculateRoute(){
   }
   //  Pass request to route method
   directionsService.route(request, function(result, status){
-    if(status == google.maps.DirectionsStatus.OK) {     
+    if(status == google.maps.DirectionsStatus.OK) {   
+          //  Get distance in float format
+          var distanceGMmaps = parseFloat(result.routes[0].legs[0].distance.text.replace(",","."));    
+          //  Duration in format '2h 22m'
+          var duration = result.routes[0].legs[0].duration.text;  //time
+      
+         //  Get value of selected radio button(ticket type)
+          var types = document.getElementsByName('optradio');     
+          var ticketType;
+          for(var i = 0; i < types.length; i++){
+            if(types[i].checked){
+          ticketType = types[i].value;
+
+          if(ticketType == 'One way ticket'){
+            //Fixed 0.2 euros/km
+            distance = distanceGMmaps;
+            price = parseFloat((distance * 0.2).toFixed(2));
+          }
+          if(ticketType == '2-part return ticket'){
+            distance = distanceGMmaps * 2;
+            price = parseFloat(((distance * 0.2).toFixed(2)));
+          }
+        }
+      }
       //  Get distance in km and time needed to travel via Transit
-      $('#output').html("<div class='alert-info'>From: " + document.getElementById("input_Starting_Point").value +".<br />To: " + document.getElementById("input_Destination_Point").value +".<br />Distance: "+result.routes[0].legs[0].distance.text+".<br />Duration: "+result.routes[0].legs[0].duration.text+".</div>");      //Display route
+      $('#output').html("<div class='alert-info'>From: " + document.getElementById("input_Starting_Point").value +".<br />To: " + document.getElementById("input_Destination_Point").value +".<br />Distance: "+distance+".<br />Duration: "+result.routes[0].legs[0].duration.text+".</div>");      //Display route
       directionsDisplay.setDirections(result);
     }
     else {
