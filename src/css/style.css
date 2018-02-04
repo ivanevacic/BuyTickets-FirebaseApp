@@ -29,3 +29,10 @@
 #outputEdit {
   margin-top: 30px;
   margin-bottom: 30px; }
+
+.pac-container {
+  background-color: #FFF;
+  z-index: 1052 !important;
+  position: fixed;
+  display: inline-block;
+  float: left; }

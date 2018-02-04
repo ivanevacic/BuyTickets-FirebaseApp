@@ -1,12 +1,3 @@
-  //--  Input autocomplete --//
-  var options = {
-    types: ['(cities)'] //  Limit autocomplete only to cities
-  }
-  var input1 = document.getElementById('inputEdit_Starting_Point');
-  var autocomplete1 = new google.maps.places.Autocomplete(input1, options);
-  
-  var input2 = document.getElementById('inputEdit_Destination_Point');
-  var autocomplete2 = new google.maps.places.Autocomplete(input2, options);
   //------------------------//
   //Create google maps
   var myLatLng = {
@@ -18,8 +9,8 @@
     zoom:5,
     MapTypeId: google.maps.MapTypeId.ROADMAP
   }; 
-
-//All maps
+  
+  //All maps
 var mapView = new google.maps.Map(document.getElementById('viewMap'),mapOptions);
 var mapEdit = new google.maps.Map(document.getElementById('editGoogleMap'),mapOptions);
 //Direction services
@@ -27,8 +18,19 @@ var directionsService = new google.maps.DirectionsService();
 var directionsDisplay = new google.maps.DirectionsRenderer();
 directionsDisplay.setMap(mapView);
 directionsDisplay.setMap(mapEdit);
-
   
+  //--  Input autocomplete --//
+  var options = {
+    types: ['(cities)'] //  Limit autocomplete only to cities
+  }
+  var input1 = document.getElementById('inputEdit_Starting_Point');
+  var autocomplete1 = new google.maps.places.Autocomplete(input1, options);
+  
+  var input2 = document.getElementById('inputEdit_Destination_Point');
+  var autocomplete2 = new google.maps.places.Autocomplete(input2, options);
+  
+  
+ 
 //Populates table with ticket on each refresh
 Tickets.on('value', function(firebaseResponse){
   var ticket_table = $('#ticket_table');
