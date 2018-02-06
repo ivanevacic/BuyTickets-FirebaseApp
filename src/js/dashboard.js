@@ -37,8 +37,7 @@ Tickets.on('value', function(firebaseResponse){
 });
 
 //  Views ticket route in google maps
-function ViewTicketDetails(ticketKey){
-  
+function ViewTicketDetails(ticketKey){  
   var myLatLng = {
         lat: 51.5,
       lng: -0.1
@@ -75,6 +74,7 @@ function ViewTicketDetails(ticketKey){
   //  Pass request to route method
   directionsService.route(request, function(result, status){
     if(status == google.maps.DirectionsStatus.OK) {   
+      
       //  If route is valid,show path in google maps    
       console.log(result);       
       directionsDisplay.setDirections(result);     
