@@ -1,6 +1,4 @@
-  //------------------------//
-  //Create google maps
-  
+//  Create google maps 
   var myLatLng = {
     lat: 51.5,
     lng: -0.1
@@ -10,13 +8,12 @@
     zoom:5,
     MapTypeId: google.maps.MapTypeId.ROADMAP
   }; 
-   //All maps
-///var mapView = new google.maps.Map(document.getElementById('viewMap'),mapOptions);
+   // All maps
 var mapEdit = new google.maps.Map(document.getElementById('editGoogleMap'),mapOptions);
-//Direction services
+//  Direction services
 var directionsService = new google.maps.DirectionsService();
 var directionsDisplay = new google.maps.DirectionsRenderer();
-//directionsDisplay.setMap(mapView);
+
 directionsDisplay.setMap(mapEdit); 
 //--  Input autocomplete --//
 var options = {
@@ -27,7 +24,7 @@ var autocomplete1 = new google.maps.places.Autocomplete(input1, options);
   
 var input2 = document.getElementById('inputEdit_Destination_Point');
 var autocomplete2 = new google.maps.places.Autocomplete(input2, options); 
-//Populates table with ticket on each refresh
+//  Populates table with ticket on each refresh
 Tickets.on('value', function(firebaseResponse){
   var ticket_table = $('#ticket_table');
   ticket_table.find('tbody').empty();
@@ -39,7 +36,7 @@ Tickets.on('value', function(firebaseResponse){
   });
 });
 
-//Views ticket route in google maps
+//  Views ticket route in google maps
 function ViewTicketDetails(ticketKey){
   
   var myLatLng = {
@@ -64,7 +61,7 @@ function ViewTicketDetails(ticketKey){
     var ticket = firebaseResponse.val();
       starting_point = ticket.starting_point;
       destination_point = ticket.destination_point; 
-      //test
+      //  test
       console.log('from : ' + starting_point);
       console.log('to : ' + destination_point);          
   });  
@@ -78,7 +75,7 @@ function ViewTicketDetails(ticketKey){
   //  Pass request to route method
   directionsService.route(request, function(result, status){
     if(status == google.maps.DirectionsStatus.OK) {   
-      //If route is valid,show path in google maps    
+      //  If route is valid,show path in google maps    
       console.log(result);       
       directionsDisplay.setDirections(result);     
       $('#viewModal').on('shown.bs.modal', function(){
@@ -91,7 +88,7 @@ function ViewTicketDetails(ticketKey){
   });
 }
 
-//Populates edit modal with values from firebase for clicked ticket
+//  Populates edit modal with values from firebase for clicked ticket
 function EditTicket(ticketKey){
   var ticketRef = firebaseBuyTickets.ref('Tickets/' + ticketKey );
   ticketRef.once('value', function(firebaseResponse){
@@ -100,7 +97,7 @@ function EditTicket(ticketKey){
       $('#inputEdit_Destination_Point').val(ticket.destination_point);  
       $('#editDatePicker_date').val(ticket.date_created);
       $('#saveChangesButton').attr('onclick', 'saveChanges("' + ticketKey + '")');
-      //Check ticket type based on firebase value
+      //  Check ticket type based on firebase value
       if(ticket.ticket_type == 'One way ticket') {
         document.getElementById('one_way').checked = true;
       }   
@@ -130,11 +127,11 @@ function EditTicket(ticketKey){
   });
 }
 
-//Save changes on ticket(if we have any)
+//  Save changes on ticket(if we have any)
 function saveChanges(ticketKey) {
   //Reference clicked ticket in table
   var ticketRef = firebaseBuyTickets.ref('Tickets/' + ticketKey );
-  //Get input values
+  //  Get input values
   var startingPoint = document.getElementById('inputEdit_Starting_Point').value;
   var destinationPoint = document.getElementById('inputEdit_Destination_Point').value;
   var date = document.getElementById('editDatePicker_date').value; 
@@ -160,7 +157,7 @@ function saveChanges(ticketKey) {
           ticketType = types[i].value;
         }
       }
-      //If date is empty
+      //  If date is empty
       if(document.getElementById('editDatePicker_date').value  == '' ) {
         alert('Enter input date');
         return;
@@ -168,7 +165,7 @@ function saveChanges(ticketKey) {
       var distance;
       var price;
       if(ticketType == 'One way ticket'){
-        //Fixed 0.2 euros/km
+        //  Fixed 0.2 euros/km
         distance = distanceGMmaps;
         price = parseFloat((distance * 0.2).toFixed(2));
       }
@@ -176,7 +173,7 @@ function saveChanges(ticketKey) {
         distance = distanceGMmaps * 2;
         price = parseFloat(((distance * 0.2).toFixed(2)));
       }
-      //Console.log for testing
+      //  Console.log for testing
       console.log(distance);      
       //  Object with input values;
       var Ticket = {
@@ -188,7 +185,7 @@ function saveChanges(ticketKey) {
         starting_point: startingPoint,
         ticket_type: ticketType
         }
-        //Save changes in clicked ticket      
+        //  Save changes in clicked ticket      
         ticketRef.update(Ticket);
         //  Test
         console.log(Ticket);
@@ -202,7 +199,7 @@ function saveChanges(ticketKey) {
 }
 
 
-//Calculate updated route in edit modal
+//  Calculate updated route in edit modal
 function calculateRoute(){
   //  Create request
   var request = {
@@ -220,14 +217,14 @@ function calculateRoute(){
       var duration = result.routes[0].legs[0].duration.text;  //time
      //  Get value of selected radio button(ticket type)
       var types = document.getElementsByName('optradio');  
-      //Get distance and price based on ticket type   
+      //  Get distance and price based on ticket type   
       var ticketType;
               for(var i = 0; i < types.length; i++){
                 if(types[i].checked){
               ticketType = types[i].value;
 
               if(ticketType == 'One way ticket'){
-                //Fixed 0.2 euros/km
+                //  Fixed 0.2 euros/km
                 distance = distanceGMmaps;
                 price = parseFloat((distance * 0.2).toFixed(2));
               }
@@ -237,10 +234,10 @@ function calculateRoute(){
               }
             }
           }
-          //Show route on google maps
+          //  Display route    
           directionsDisplay.setDirections(result);
-        //  Get distance in km and time needed to travel via Transit
-        $('#outputEdit').html("<div class='alert-info'>From: " + document.getElementById("inputEdit_Starting_Point").value +".<br />To: " + document.getElementById("inputEdit_Destination_Point").value +".<br />Distance: "+distance+ "km" + ".<br />Duration: "+result.routes[0].legs[0].duration.text+".</div>");      //Display route     
+        //  Show distance in km and time needed to travel via Transit       
+       document.getElementById('outputEdit').innerHTML = "<div class='alert-info'>From: " + document.getElementById("inputEdit_Starting_Point").value +".<br />To: " + document.getElementById("inputEdit_Destination_Point").value +".<br />Distance: "+distance+ "km" + ".<br />Duration: "+result.routes[0].legs[0].duration.text+".</div>"; 
     }
     else {     
       alert("Can't calculate route.Try another city!");

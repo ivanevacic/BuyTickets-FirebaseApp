@@ -68,7 +68,7 @@ function calculateRoute(){
         }
       }
       //  Get distance in km and time needed to travel via Transit
-      $('#output').html("<div class='alert-info'>From: " + document.getElementById("input_Starting_Point").value +".<br />To: " + document.getElementById("input_Destination_Point").value +".<br />Distance: "+distance+ "km" + ".<br />Duration: "+result.routes[0].legs[0].duration.text+".</div>");      //Display route
+     document.getElementById('output').innerHTML = "<div class='alert-info'>From: " + document.getElementById("input_Starting_Point").value +".<br />To: " + document.getElementById("input_Destination_Point").value +".<br />Distance: "+distance+ "km" + ".<br />Duration: "+result.routes[0].legs[0].duration.text+".</div>";
       directionsDisplay.setDirections(result);
       //Testing unix timestapm to time
       console.log(durationUNIX);
