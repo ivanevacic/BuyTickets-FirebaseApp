@@ -45,7 +45,10 @@ function calculateRoute(){
           //  Get distance in float format
           var distanceGMmaps = parseFloat(result.routes[0].legs[0].distance.text.replace(",","."));    
           //  Duration in format '2h 22m'
-          var duration = result.routes[0].legs[0].duration.text;  //time     
+          var duration = result.routes[0].legs[0].duration.text;  //time  
+          //Test unix timestamp to time
+          var durationUNIX = result.routes[0].legs[0].duration.value;
+
          //  Get value of selected radio button(ticket type)
           var types = document.getElementsByName('optradio');     
           var ticketType;
@@ -67,6 +70,8 @@ function calculateRoute(){
       //  Get distance in km and time needed to travel via Transit
       $('#output').html("<div class='alert-info'>From: " + document.getElementById("input_Starting_Point").value +".<br />To: " + document.getElementById("input_Destination_Point").value +".<br />Distance: "+distance+ "km" + ".<br />Duration: "+result.routes[0].legs[0].duration.text+".</div>");      //Display route
       directionsDisplay.setDirections(result);
+      //Testing unix timestapm to time
+      console.log(durationUNIX);
     }
     else {     
       alert("Can't calculate route.Try another city!");
